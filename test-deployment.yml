@@ -1,0 +1,6 @@
+template-file-path: vpc.yml
+parameters:
+  PJid: git-cfn
+  VPCCIDR: 172.16.0.0/16
+  # PublicSubnetCIDR: 172.16.0.0/24
+tags: {}

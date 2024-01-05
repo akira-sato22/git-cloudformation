@@ -1,0 +1,69 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Parameters:
+  PJid:
+    Type: String
+    Default: "test"
+  VPCCIDR:
+    Type: String
+    Default: "10.0.0.0/16"
+  PublicSubnetCIDR:
+    Type: String
+    Default: "10.0.10.0/24"
+
+Resources: 
+# VPC network
+  VPC: 
+    Type: "AWS::EC2::VPC"
+    Properties: 
+      CidrBlock: !Ref VPCCIDR
+      EnableDnsSupport: "true"
+      EnableDnsHostnames: "true"
+      InstanceTenancy: default
+      Tags: 
+        - Key: Name
+          Value: !Sub "${PJid}-vpc"
+# # InternetGateway
+#   InternetGateway: 
+#     Type: "AWS::EC2::InternetGateway"
+#     Properties: 
+#       Tags: 
+#         - Key: Name
+#           Value: !Sub "${PJid}-igw"
+# # IGW Attach
+#   InternetGatewayAttachment: 
+#     Type: "AWS::EC2::VPCGatewayAttachment"
+#     Properties: 
+#       InternetGatewayId: !Ref InternetGateway
+#       VpcId: !Ref VPC 
+# # Public Subnet
+#   PublicSubnet: 
+#     Type: "AWS::EC2::Subnet"
+#     Properties: 
+#       AvailabilityZone: "ap-northeast-1a"
+#       CidrBlock: !Ref PublicSubnetCIDR
+#       VpcId: !Ref VPC 
+#       Tags: 
+#         - Key: Name
+#           Value: !Sub "${PJid}-public-subnet-a"
+# # Public RouteTable
+#   PublicRouteTable: 
+#     Type: "AWS::EC2::RouteTable"
+#     Properties: 
+#       VpcId: !Ref VPC 
+#       Tags: 
+#         - Key: Name
+#           Value: !Sub "${PJid}-public-route-a"
+# # PublicRoute
+#   PublicRoute: 
+#     Type: "AWS::EC2::Route"
+#     Properties: 
+#       RouteTableId: !Ref PublicRouteTable 
+#       DestinationCidrBlock: "0.0.0.0/0"
+#       GatewayId: !Ref InternetGateway
+# # PublicRouteTable Associate Subnet
+#   PublicSubnetRouteTablessociation: 
+#     Type: "AWS::EC2::SubnetRouteTableAssociation"
+#     Properties: 
+#       SubnetId: !Ref PublicSubnet 
+#       RouteTableId: !Ref PublicRouteTable
