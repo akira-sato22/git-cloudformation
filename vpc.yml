@@ -10,6 +10,9 @@ Parameters:
   PublicSubnetCIDR:
     Type: String
     Default: "10.0.10.0/24"
+  PublicSubnetCIDRC:
+    Type: String
+    Default: "10.0.20.0/24"
 
 Resources: 
 # VPC network
@@ -23,19 +26,6 @@ Resources:
       Tags: 
         - Key: Name
           Value: !Sub "${PJid}-vpc"
-# # InternetGateway
-#   InternetGateway: 
-#     Type: "AWS::EC2::InternetGateway"
-#     Properties: 
-#       Tags: 
-#         - Key: Name
-#           Value: !Sub "${PJid}-igw"
-# # IGW Attach
-#   InternetGatewayAttachment: 
-#     Type: "AWS::EC2::VPCGatewayAttachment"
-#     Properties: 
-#       InternetGatewayId: !Ref InternetGateway
-#       VpcId: !Ref VPC 
 # Public Subnet
   PublicSubnet: 
     Type: "AWS::EC2::Subnet"
@@ -54,16 +44,33 @@ Resources:
       Tags: 
         - Key: Name
           Value: !Sub "${PJid}-public-route-a"
-# PublicRoute
-  # PublicRoute: 
-  #   Type: "AWS::EC2::Route"
-  #   Properties: 
-  #     RouteTableId: !Ref PublicRouteTable 
-  #     DestinationCidrBlock: "0.0.0.0/0"
-  #     GatewayId: !Ref InternetGateway
 # PublicRouteTable Associate Subnet
   PublicSubnetRouteTablessociation: 
     Type: "AWS::EC2::SubnetRouteTableAssociation"
     Properties: 
       SubnetId: !Ref PublicSubnet 
       RouteTableId: !Ref PublicRouteTable
+# Public Subnet-C
+  PublicSubnetC: 
+    Type: "AWS::EC2::Subnet"
+    Properties: 
+      AvailabilityZone: "ap-northeast-1c"
+      CidrBlock: !Ref PublicSubnetCIDRC
+      VpcId: !Ref VPC 
+      Tags: 
+        - Key: Name
+          Value: !Sub "${PJid}-public-subnet-c"
+# Public RouteTable-C
+  PublicRouteTableC: 
+    Type: "AWS::EC2::RouteTable"
+    Properties: 
+      VpcId: !Ref VPC 
+      Tags: 
+        - Key: Name
+          Value: !Sub "${PJid}-public-route-c"
+# PublicRouteTable Associate Subnet-C
+  PublicSubnetRouteTablessociationC: 
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    Properties: 
+      SubnetId: !Ref PublicSubnetC 
+      RouteTableId: !Ref PublicRouteTableC
