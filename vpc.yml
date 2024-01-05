@@ -23,19 +23,19 @@ Resources:
       Tags: 
         - Key: Name
           Value: !Sub "${PJid}-vpc"
-# InternetGateway
-  InternetGateway: 
-    Type: "AWS::EC2::InternetGateway"
-    Properties: 
-      Tags: 
-        - Key: Name
-          Value: !Sub "${PJid}-igw"
-# IGW Attach
-  InternetGatewayAttachment: 
-    Type: "AWS::EC2::VPCGatewayAttachment"
-    Properties: 
-      InternetGatewayId: !Ref InternetGateway
-      VpcId: !Ref VPC 
+# # InternetGateway
+#   InternetGateway: 
+#     Type: "AWS::EC2::InternetGateway"
+#     Properties: 
+#       Tags: 
+#         - Key: Name
+#           Value: !Sub "${PJid}-igw"
+# # IGW Attach
+#   InternetGatewayAttachment: 
+#     Type: "AWS::EC2::VPCGatewayAttachment"
+#     Properties: 
+#       InternetGatewayId: !Ref InternetGateway
+#       VpcId: !Ref VPC 
 # Public Subnet
   PublicSubnet: 
     Type: "AWS::EC2::Subnet"
@@ -55,12 +55,12 @@ Resources:
         - Key: Name
           Value: !Sub "${PJid}-public-route-a"
 # PublicRoute
-  PublicRoute: 
-    Type: "AWS::EC2::Route"
-    Properties: 
-      RouteTableId: !Ref PublicRouteTable 
-      DestinationCidrBlock: "0.0.0.0/0"
-      GatewayId: !Ref InternetGateway
+  # PublicRoute: 
+  #   Type: "AWS::EC2::Route"
+  #   Properties: 
+  #     RouteTableId: !Ref PublicRouteTable 
+  #     DestinationCidrBlock: "0.0.0.0/0"
+  #     GatewayId: !Ref InternetGateway
 # PublicRouteTable Associate Subnet
   PublicSubnetRouteTablessociation: 
     Type: "AWS::EC2::SubnetRouteTableAssociation"
